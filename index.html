@@ -164,9 +164,9 @@ dialog.toc::backdrop{background:rgba(10,16,13,.5)}
 }
 @media (min-width:700px) and (min-aspect-ratio:1/1) and (max-height:820px){.hero .lead{display:none}}
 .ticket{display:grid;grid-template-columns:1fr auto;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);text-align:left;box-shadow:0 6px 18px rgba(30,60,90,.12)}
-.ticket .info{padding:14px 16px;display:grid;gap:2px}
+.ticket .info{padding:14px 16px;display:grid;gap:2px;min-width:0}
 .ticket .label{font-size:14px;color:var(--muted);font-weight:700}
-.ticket strong{font-size:19px;font-variant-numeric:tabular-nums}
+.ticket strong{font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;min-width:0}
 .ticket .sub{font-size:14px;color:var(--muted)}
 .dday{background:var(--gold);color:var(--gold-ink);padding:12px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-left:2px dashed rgba(33,26,6,.35);min-width:112px;text-align:center}
 .dday span{font-size:13px;font-weight:700}
@@ -742,7 +742,7 @@ const PH = phase();
   else if (PH.k === "open") { const d = dayDiff(today, r[4]); if (d > 0) { top = "마감까지"; big = "D-" + d; } else { top = "오늘 마감"; big = "D-day"; } }
   else { label = "2027학년도 1학기"; top = "신청"; big = "마감"; }
   $("#heroLabel").textContent = label;
-  $("#heroPeriod").textContent = PH.k === "closed" ? "신청 기간이 끝났습니다" : r[6];
+  $("#heroPeriod").textContent = PH.k === "closed" ? "신청 기간이 끝났습니다" : r[6].replace(" ~ ", "→");   /* 표지에서는 한 줄에 들어가게 화살표로 */
   $("#dday").innerHTML = `<span>${top}</span><b>${big}</b>`;
   if (PH.k === "closed") { $("#heroSub").hidden = true; $("#dday").classList.add("closed"); }
   if (PH.k === "closed") { const f = $("#fab"); f.classList.add("closed"); $("#fabLabel").textContent = "마감"; f.setAttribute("aria-label", "모집 마감, 문의하기"); }
@@ -985,6 +985,9 @@ function fitCover(){
   const room = art.top + art.width * 795 / 765 - (act.bottom + 6);
   txt.style.setProperty("--lift", Math.round(Math.max(0, Math.min(over, room))) + "px");
 }
+/* 표지 신청 기간: 좁은 화면에서도 한 줄에 들어가게 글자를 조금씩 줄인다 */
+function fitPeriod(){ const e = $("#heroPeriod"); let s = 19; e.style.fontSize = ""; while (e.scrollWidth > e.clientWidth && s > 13) { s -= .5; e.style.fontSize = s + "px"; } }
+fitPeriod(); addEventListener("resize", fitPeriod); addEventListener("load", fitPeriod); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPeriod);
 fitCover(); addEventListener("resize", fitCover); addEventListener("load", fitCover);
 /* 공유 버튼: 표지를 지나면 보이고, 문의 섹션의 공유 버튼이 화면에 있으면 숨김 */
 {
