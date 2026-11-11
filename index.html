@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>2027학년도 1학기 농촌유학생 모집 | 서울특별시교육청</title>
-<meta name="description" content="1차 신청 2026. 11. 26.(목)~12. 2.(수). 서울 초·중학생이 6개월~1년 동안 강원·전남·전북·제주·인천·경남 농어촌 학교에 다닙니다.">
+<meta name="description" content="1차 신청 2026. 11. 26.(목)~12. 2.(수). 서울 초·중학생이 6개월~1년 동안 강원·전남광주·전북·제주·인천·경남 농어촌 학교에 다닙니다.">
 <link rel="canonical" href="https://xn--980b422b6fe50j.sen.re.kr/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -404,7 +404,7 @@ footer .wrap{display:grid;gap:6px}
       <p class="notice" id="notice" hidden><b>알림</b><span id="noticeText"></span></p>
       <img class="lettering" src="lettering.webp" width="900" height="184" alt="흙을 밟는 도시 아이들">
       <h1 id="heroTitle">2027학년도 1학기<br class="br-m"> 농촌유학생 모집</h1>
-      <p class="lead">서울 초·중학생이 6개월 또는 1년 동안 <span class="nw">강원·전남·전북·제주·인천·경남의</span> 농어촌 학교에 다닙니다.</p>
+      <p class="lead">서울 초·중학생이 6개월 또는 1년 동안 <span class="nw">강원·전남광주·전북·제주·인천·경남의</span> 농어촌 학교에 다닙니다.</p>
       <div class="hero-act">
         <div class="ticket">
           <div class="info"><span class="label" id="heroLabel">1차 신청</span><strong id="heroPeriod"></strong><span class="sub" id="heroSub">서울 재학 학교에 신청서 제출</span></div>
@@ -955,7 +955,7 @@ async function shareKakao(){
       const u = S.shareUrl;
       /* 카카오 디벨로퍼스에 만들어 둔 메시지 템플릿(제목·이미지·버튼·링크는 템플릿에서 고침). 실패하면 기본 피드로 보냄 */
       if (S.kakaoTemplateId) { try { Kakao.Share.sendCustom({templateId: S.kakaoTemplateId}); return; } catch(err) {} }
-      Kakao.Share.sendDefault({objectType: "feed", content: {title: "2027학년도 1학기 농촌유학생 모집", description: "1차 신청 11. 26.(목) ~ 12. 2.(수) · 강원·전남·전북·제주·인천·경남 농어촌 학교에서 6개월~1년", imageUrl: S.ogImage, imageWidth: 800, imageHeight: 400, link: {mobileWebUrl: u, webUrl: u}}, buttons: [{title: "자세히 보기", link: {mobileWebUrl: u, webUrl: u}}]});
+      Kakao.Share.sendDefault({objectType: "feed", content: {title: "2027학년도 1학기 농촌유학생 모집", description: "1차 신청 11. 26.(목) ~ 12. 2.(수) · 강원·전남광주·전북·제주·인천·경남 농어촌 학교에서 6개월~1년", imageUrl: S.ogImage, imageWidth: 800, imageHeight: 400, link: {mobileWebUrl: u, webUrl: u}}, buttons: [{title: "자세히 보기", link: {mobileWebUrl: u, webUrl: u}}]});
       return;
     } catch(err) {}
   }
