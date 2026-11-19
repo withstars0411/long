@@ -326,6 +326,8 @@ dialog.lb .card .zoom{display:none}
 .forms li{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .forms .fn{flex:1 1 100%;font-weight:500;font-size:15px}
 .forms .fn small{display:block;color:var(--muted);font-size:13px}
+.forms li.all{background:var(--gold-soft);border-color:transparent}
+.forms li.all .btn{flex:1 1 100%}
 .fold{margin-top:22px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .fold summary{cursor:pointer;padding:14px 16px;font-weight:700;min-height:52px;display:flex;align-items:center}
 .fold .in{padding:0 16px 18px;display:grid;gap:14px;font-size:15px}
@@ -623,6 +625,7 @@ const CONFIG = {
     status:"모집 예정",applyDeadline:"2026-12-02",
     notice:"서울시교육청 지원금은 2027년 예산이 확정되면(12월 중순) 최종 안내합니다.",
     youtubeUrl:"",youtubeChannel:"https://www.youtube.com/user/GoodSenNews",formPage:"",
+    formsAll:"https://xn--980b422b6fe50j.sen.re.kr/forms/2027-1-forms.hwpx",formsAllName:"[서식1~4] 2027학년도 1학기 농촌유학 신청 서식.hwpx",
     kakaoChannel:"https://pf.kakao.com/_yfxlCb",dept:"서울특별시교육청 초등교육과 생태·환경교육팀",
     tel:"02-1396, 02-6033-5831",scheduleNote:"※ 세부 일정은 추진 상황에 따라 바뀔 수 있습니다."},
   schedule:[
@@ -927,6 +930,8 @@ $("#forms").innerHTML = CONFIG.forms.map(f => {
   const name = `${f[0]} ${f[1]}`;
   return `<li><span class="fn">${esc(name)}<small>${esc(f[2])}</small></span>${pv ? `<button class="btn sm" type="button" data-pv="${esc(pv)}" data-name="${esc(name)}">미리보기</button>` : ""}${btn(f[3], "HWP", f[3] ? name + (f[3].match(/\.hwpx?$/) || [".hwpx"])[0] : "")}${btn(f[4], "PDF")}</li>`;
 }).join("");
+/* 서식 일괄 다운로드: 서식1~4를 한 한글 파일에 묶은 것. 설정 시트 기본정보 forms_all_url이 비어 있으면 숨김 */
+if (S.formsAll) $("#forms").insertAdjacentHTML("afterbegin", `<li class="all"><span class="fn">서식 한 번에 받기</span><a class="btn sm primary" href="${esc(S.formsAll)}" download="${esc(S.formsAllName || "농촌유학 신청 서식.hwpx")}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M5.5 8.5L10 13l4.5-4.5M4 16.5h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>HWP 일괄 다운로드</a></li>`);
 
 /* 유의사항 */
 $("#must").innerHTML = CONFIG.notices.filter(n => n[0] === "Y").map(n => `<li>${esc(n[1])}</li>`).join("");
