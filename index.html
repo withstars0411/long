@@ -212,6 +212,8 @@ section.block{padding-block:clamp(56px,7vw,88px);border-top:1px solid var(--line
 .video-cover .play{position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .video-cover .play svg{width:28px;height:28px;margin-left:4px}
 .video-cover .soon{position:absolute;left:12px;top:12px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video figcaption{font-size:15px;color:var(--muted)}
 @media (min-width:860px){.about{grid-template-columns:1.15fr 1fr;align-items:start}}
 
@@ -758,6 +760,20 @@ const PH = phase();
 /* 영상: 실제 사이트는 youtube-nocookie 플레이어를 누를 때 불러옴 */
 $("#videoLink").href = S.youtubeUrl || S.youtubeChannel;
 if (S.youtubeUrl) { $("#videoSoon").hidden = true; $("#videoCap").textContent = "2027학년도 1학기 농촌유학 모집 안내 영상"; }
+const ytId = (S.youtubeUrl.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/) || [])[1];
+if (ytId) {
+  $("#videoLink").addEventListener("click", e => {
+    e.preventDefault();
+    const box = document.createElement("div"); box.className = "video-frame";
+    const f = document.createElement("iframe");
+    f.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`;
+    f.title = "2027학년도 1학기 농촌유학 모집 안내 영상";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true; f.referrerPolicy = "strict-origin-when-cross-origin";
+    box.appendChild(f); e.currentTarget.replaceWith(box); f.focus();
+  });
+  $("#videoLink .sr").textContent = "2027학년도 1학기 농촌유학 모집 안내 영상 재생";
+}
 
 /* 지도 그리기 */
 function mapSVG(mini){
