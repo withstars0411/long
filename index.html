@@ -757,22 +757,19 @@ const PH = phase();
   if (PH.k === "closed") { const f = $("#fab"); f.classList.add("closed"); $("#fabLabel").textContent = "마감"; f.setAttribute("aria-label", "모집 마감, 문의하기"); }
 })();
 
-/* 영상: 실제 사이트는 youtube-nocookie 플레이어를 누를 때 불러옴 */
+/* 영상: 유튜브 주소가 있으면 커버 없이 바로 플레이어를 보여 줌 (주소가 없을 때만 커버+채널 링크) */
 $("#videoLink").href = S.youtubeUrl || S.youtubeChannel;
 if (S.youtubeUrl) { $("#videoSoon").hidden = true; $("#videoCap").textContent = "2027학년도 1학기 농촌유학 모집 안내 영상"; }
 const ytId = (S.youtubeUrl.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/) || [])[1];
 if (ytId) {
-  $("#videoLink").addEventListener("click", e => {
-    e.preventDefault();
-    const box = document.createElement("div"); box.className = "video-frame";
-    const f = document.createElement("iframe");
-    f.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`;
-    f.title = "2027학년도 1학기 농촌유학 모집 안내 영상";
-    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-    f.allowFullscreen = true; f.referrerPolicy = "strict-origin-when-cross-origin";
-    box.appendChild(f); e.currentTarget.replaceWith(box); f.focus();
-  });
-  $("#videoLink .sr").textContent = "2027학년도 1학기 농촌유학 모집 안내 영상 재생";
+  const box = document.createElement("div"); box.className = "video-frame";
+  const f = document.createElement("iframe");
+  f.src = `https://www.youtube-nocookie.com/embed/${ytId}?rel=0&playsinline=1`;
+  f.title = "2027학년도 1학기 농촌유학 모집 안내 영상";
+  f.allow = "encrypted-media; picture-in-picture; fullscreen";
+  f.allowFullscreen = true; f.referrerPolicy = "strict-origin-when-cross-origin";
+  f.loading = "lazy";
+  box.appendChild(f); $("#videoLink").replaceWith(box);
 }
 
 /* 지도 그리기 */
